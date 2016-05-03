@@ -40,4 +40,4 @@
   when: docker_driver.stdout == 'btrfs'
 
 - name: docker start service
-  service: name=docker state=started
+  service: name=docker state=restarted
