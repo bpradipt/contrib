@@ -9,11 +9,10 @@
   sudo: no
 
 - name: DNS | Download yaml files from Kubernetes repo
-  local_action: get_url
-    url=https://raw.githubusercontent.com/GoogleCloudPlatform/kubernetes/master/cluster/addons/dns/{{ item }}.in
+  local_action: copy
+    src="{{ item }}.in"
     dest="{{ local_temp_addon_dir }}/dns/{{ item }}.j2"
     force=yes
-    validate_certs=False
   sudo: no
   changed_when: false
   with_items:
@@ -30,6 +29,16 @@
   with_items:
   - skydns-rc.yaml
   - skydns-svc.yaml
+
+- name: DNS | Replace amd64 with the right platform arch
+  local_action: replace
+    dest="{{ local_temp_addon_dir }}/dns/{{ item }}.j2"
+    regexp="amd64"
+    replace={{ ansible_machine }}
+  sudo: no
+  changed_when: false
+  with_items:
+  - skydns-rc.yaml
 
 - name: DNS | Install Template from converted saltfiles
   template:
