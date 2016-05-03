@@ -1,17 +1,14 @@
 ---
 - name: KUBE-DASH | Assures {{ kube_addons_dir }}/kube-dash dir exists
-  file: path={{ kube_addons_dir }}/kube-dash state=directory
+  file: path="{{ kube_addons_dir }}/kube-dash" state=directory
 
-- name: KUBE-DASH | Download kube-dash files from Kubernetes repo
-  get_url:
-    url=https://raw.githubusercontent.com/kubernetes/kubedash/master/deploy/{{ item }}
-    dest="{{ kube_addons_dir }}/kube-dash/"
-    force=yes
-    validate_certs=False
-  environment:
-    http_proxy: "{{ http_proxy|default('') }}"
-    https_proxy: "{{ https_proxy|default('') }}"
-    no_proxy: "{{ no_proxy|default('') }}"
-  with_items:
-    - kube-dash-rc.yaml
-    - kube-dash-svc.yaml
+- name: KUBE-DASH | Copy kube-dashboard-controller.yaml file
+  copy: src="dashboard-controller.yaml" dest="{{ kube_addons_dir }}/kube-dash/dashboard-controller.yaml"
+
+- name: KUBE-DASH | Copy kube-dashboard-service.yaml file
+  copy: src="dashboard-service.yaml" dest="{{ kube_addons_dir }}/kube-dash/dashboard-service.yaml"
+
+- name: DNS | Replace amd64 with the right platform arch
+  replace:  dest="{{ kube_addons_dir }}/kube-dash/dashboard-controller.yaml"
+    regexp="amd64"
+    replace={{ ansible_machine }}
