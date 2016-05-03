@@ -10,6 +10,9 @@
 
 - include: coreos.yml
   when: is_coreos
+
+- include: rhel.yml
+  when: ansible_distribution == "RedHat"
 #
 # systemd service configuration uses EnvironmentFile (docker and docker-network)
 # upstart service configuration sources docker_config_dir / docker

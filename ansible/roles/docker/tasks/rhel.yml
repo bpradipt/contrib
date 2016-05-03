@@ -1,0 +1,5 @@
+---
+- name: RHEL | Write docker service file
+  copy: src=docker.service dest="/usr/lib/systemd/system/docker.service"
+  notify:
+    - reload systemd
