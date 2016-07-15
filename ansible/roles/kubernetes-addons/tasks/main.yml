@@ -36,11 +36,9 @@
   when: kube-dash
 
 - name: Get kube-addons script from Kubernetes
-  get_url:
-    url=https://raw.githubusercontent.com/kubernetes/kubernetes/master/cluster/addons/addon-manager/kube-addons.sh
+  copy:
+    src=kube-addons.sh
     dest={{ kube_script_dir }}/kube-addons.sh mode=0755
-    force=yes
-    validate_certs=False
   environment:
     http_proxy: "{{ http_proxy|default('') }}"
     https_proxy: "{{ https_proxy|default('') }}"
