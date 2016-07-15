@@ -15,6 +15,11 @@
 #    dest={{ kube_script_dir }}/make-ca-cert.sh mode=0500
 #    force=yes
 
+- name: EASYRSA | use easy-rsa package from local copy
+  copy:
+    src=easy-rsa.tar.gz
+    dest=/tmp/easy-rsa.tar.gz
+
 - name: HACK | overwrite make-ca-cert.sh from local copy
   copy:
     src=make-ca-cert.sh

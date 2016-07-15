@@ -96,8 +96,8 @@ service_ip=$(echo "${octets[*]}" | sed 's/ /./g')
 # Determine appropriete subject alt names
 sans="IP:${cert_ip},IP:${service_ip},DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.${dns_domain},DNS:${master_name}"
 
-curl -sSL -O https://storage.googleapis.com/kubernetes-release/easy-rsa/easy-rsa.tar.gz
-tar xzf easy-rsa.tar.gz
+#curl -sSL -O https://storage.googleapis.com/kubernetes-release/easy-rsa/easy-rsa.tar.gz
+tar xzf /tmp/easy-rsa.tar.gz
 cd easy-rsa-master/easyrsa3
 
 # Sadly, openssl is very verbose to std*err* with no option to turn it off.
