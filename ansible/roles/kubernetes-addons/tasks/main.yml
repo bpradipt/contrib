@@ -47,11 +47,9 @@
     - restart kube-addons
 
 - name: Get kube-addon-update script from Kubernetes
-  get_url:
-    url=https://raw.githubusercontent.com/kubernetes/kubernetes/master/cluster/addons/addon-manager/kube-addon-update.sh
+  copy:
+    src=kube-addon-update.sh
     dest={{ kube_script_dir }}/kube-addon-update.sh mode=0755
-    force=yes
-    validate_certs=False
   environment:
     http_proxy: "{{ http_proxy|default('') }}"
     https_proxy: "{{ https_proxy|default('') }}"
