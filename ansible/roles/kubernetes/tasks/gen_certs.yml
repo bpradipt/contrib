@@ -42,7 +42,7 @@
     CERT_GROUP: "{{ kube_cert_group }}"
     HTTP_PROXY: "{{ http_proxy|default('') }}"
     HTTPS_PROXY: "{{ https_proxy|default('') }}"
-    MASTER_VIP: "{{ hostvars[groups['masters'][0]].master_vip }}"
+    MASTER_VIP: "{{ hostvars[groups['masters'][0]].master_vip | default(kube_cert_ip) }}"
 
 - name: Verify certificate permissions
   file:
